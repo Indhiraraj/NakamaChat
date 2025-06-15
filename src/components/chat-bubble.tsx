@@ -28,13 +28,13 @@ const ChatBubble = ({ message }: ChatBubbleType) => {
     >
       <Card
         className={cn(
-          "w-fit max-w-md shadow-none",
+          "w-fit max-w-md shadow-none py-4",
           isOwnMessage
             ? "bg-primary text-white rounded-br-none"
             : "bg-muted text-foreground rounded-bl-none"
         )}
       >
-        <CardContent className="md:p-3">
+        <CardContent className="md:px-3">
           {!isOwnMessage && (
             <p className="text-sm font-medium text-muted-foreground mb-1">
               {message.sender?.username}

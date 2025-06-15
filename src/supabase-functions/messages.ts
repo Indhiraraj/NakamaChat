@@ -1,9 +1,9 @@
 import { supabase } from "@/lib/supabaseClient";
 
-const user = (await supabase.auth.getUser()).data.user
-  
+
 
 export async function getRoomMessages(roomID: string) {
+
 
     const {data, error} = await supabase.from('messages')
     .select("*")
@@ -21,7 +21,8 @@ export async function getRoomMessages(roomID: string) {
 }
 
 export async function addMessageToRoom(roomID: string, content: string, replyTo: string | null) {
-
+    const user = (await supabase.auth.getUser()).data.user
+  
     const {data, error} = await supabase.from('messages')
     .insert([
       {

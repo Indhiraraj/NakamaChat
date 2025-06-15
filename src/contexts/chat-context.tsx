@@ -45,7 +45,7 @@ export const ChatContextProvider = ({ children }: Props) => {
   const [rooms, setRooms] = useState<ChatRoom[]>([])
   const [chatPartnerIds, setChatPartnerIds] = useState<string[]>([])
   const [allUsers, setAllUsers] = useState<Profile[]>([])
-  const [currentUser, setCurrentUser] = useState<Profile | null>(null)
+  // const [currentUser, setCurrentUser] = useState<Profile | null>(null)
 
   // Fetch rooms + users + derive partner IDs
   const refreshChatData = async () => {
@@ -53,8 +53,8 @@ export const ChatContextProvider = ({ children }: Props) => {
     if (!me) return
 
     const profiles = await getAllProfiles()
-    const userProfile = profiles.find(p => p.id === me.id)
-    setCurrentUser(userProfile!)
+    // const userProfile = profiles.find(p => p.id === me.id)
+    // setCurrentUser(userProfile!)
     setAllUsers(profiles.filter((p) => p.id !== me.id))
 
     const fetchedRooms = await fetchUserChatRooms()

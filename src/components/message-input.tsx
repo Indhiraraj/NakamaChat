@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea"
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Button } from "./ui/button";
 import { addMessageToRoom } from "@/supabase-functions/messages";
 import { useParams } from "react-router-dom";
@@ -42,7 +42,7 @@ export function MessageInput({
                         }
                     }}
                     placeholder="Type a message..."
-                    className="flex-1 resize-none border-primary-300 focus:ring-primary-500 h-16"
+                    className="flex-1 resize-none border-primary-300 focus:ring-primary-500 h-16 md:h-20"
                 />
                 <Button
                     type="submit"

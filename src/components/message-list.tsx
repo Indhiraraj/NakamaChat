@@ -3,7 +3,7 @@ import { CardContent } from "./ui/card";
 import ChatBubble from "./chat-bubble";
 import type { Message } from "@/contexts/chat-context";
 import { ScrollArea } from "./ui/scroll-area";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 type MessageListProps = React.ComponentProps<"div"> & {
     messages: Message[],
@@ -14,7 +14,7 @@ type MessageListProps = React.ComponentProps<"div"> & {
 }
 
 export function MessageList({
-    className, messages, scrollAreaRef, messageEndRef, scrollTimeoutRef
+    className, messages, scrollAreaRef, messageEndRef
 }: MessageListProps) {
     useEffect(() => {
         const scrollDown = () => {
@@ -30,7 +30,7 @@ export function MessageList({
         }, 100);
     }, [messages])
     return (
-        <div className={cn("flex flex-col gap-6 min-h-2/3 max-h-[90dvh] w-full", className)}>
+        <div className={cn("flex flex-col gap-6 min-h-[70dvh] md:min-h-2/3 w-full", className)}>
             <ScrollArea ref={scrollAreaRef} className="h-full overflow-y-auto">
                 <CardContent className="flex flex-col gap-6">
                     {messages && messages.map((message) => <ChatBubble key={message.id} message={message} />)}

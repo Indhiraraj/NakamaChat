@@ -19,7 +19,7 @@ import { useUserContext } from "@/contexts/user-context"
 import { useChatPartnerName } from "@/hooks/useChatPartnerName"
 
 import type { ChatRoom, RoomMember } from "@/supabase-functions/chat"
-import { ArrowLeft, Settings, UserCog, UserMinus, UserPlus } from "lucide-react"
+import { ArrowLeft, UserCog, UserMinus, UserPlus } from "lucide-react"
 import { DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
@@ -91,7 +91,7 @@ export function RoomHeader({ className, room }: { className?: string, room: Chat
             {(isOwner && !isChat) && (
                 <>
                     {/* Add User Dialog */}
-                    <div className="hidden md:block">
+                    <div className="hidden md:flex gap-2">
                     <Dialog open={addOpen} onOpenChange={setAddOpen}>
                         <DialogTrigger asChild>
                             <Button variant="outline"><UserPlus></UserPlus></Button>

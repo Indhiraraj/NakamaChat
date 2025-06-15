@@ -21,7 +21,7 @@ export function SignUpForm({
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
-    const user = await signUpNewUser(email!, password!)
+    await signUpNewUser(email!, password!)
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

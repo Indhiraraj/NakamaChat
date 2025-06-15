@@ -7,7 +7,7 @@ import { useChatContext } from "@/contexts/chat-context"
 import { useRoomMessages } from "@/hooks/useRoomMessages"
 import { useParams } from "react-router-dom"
 import type { ChatRoom } from "@/supabase-functions/chat"
-import React, { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 
 const ChatRoomPage = () => {
     const { id: roomId } = useParams<{ id: string }>()
@@ -41,10 +41,10 @@ const ChatRoomPage = () => {
 
     return (
         <SidebarProvider>
-            <div className="flex h-screen w-full">
+            <div className="flex h-[100dvh] w-full">
                 <AppSidebar />
 
-                <div className="flex flex-col flex-1 gap-2 p-6 md:p-2 w-full md:w-[75%] h-[100dvh]">
+                <div className="flex flex-col flex-1 gap-4 p-6 md:p-2 w-full md:w-[75%] h-[100dvh]">
                     {(room && messages) && <>
                         <RoomHeader room={room} />
                         <MessageList messages={messages} scrollAreaRef={scrollAreaRef} messageEndRef={messageEndRef} scrollTimeoutRef={scrollTimeoutRef} />
