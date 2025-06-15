@@ -25,6 +25,7 @@ import { DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem
  } from "./ui/dropdown-menu"
+import { SidebarTrigger } from "./ui/sidebar"
 
 export function RoomHeader({ className, room }: { className?: string, room: ChatRoom }) {
     const navigate = useNavigate()
@@ -84,7 +85,8 @@ export function RoomHeader({ className, room }: { className?: string, room: Chat
     const title = isChat ? getPartnerName(room) : room?.name || "Group Chat"
 
     return (
-        <div className={cn("flex gap-6 px-4 justify-center items-center", className)}>
+        <div className={cn("flex gap-4 px-4 justify-center items-center", className)}>
+            <SidebarTrigger className="w-10"/>
             <Button onClick={() => navigate("/")}><ArrowLeft></ArrowLeft></Button>
             <h3 className="text-lg font-semibold">{title}</h3>
 

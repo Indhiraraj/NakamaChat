@@ -51,7 +51,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <img
             src="/nakama-chat.png"
             alt="Nakama Hat"
-            className="absolute -top-4 left-2 w-9 h-9"
+            className="absolute -top-6 left-2 w-auto h-9"
           />
           NakamaChat
         </div>
