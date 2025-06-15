@@ -121,6 +121,8 @@ export async function getOrCreateOneToOneRoom(userBId: string) {
     const {data, error} = await supabase.from("chat_rooms").select("id").eq("created_by", userAId).eq("is_group", false)
 
     if (error) {
+      console.log("error");
+      
         console.error(error.message);
         return ""
     }
@@ -172,7 +174,7 @@ export async function getOrCreateOneToOneRoom(userBId: string) {
   // 5. If not found, create new room
   const { data: newRoom, error: createError } = await supabase
     .from("chat_rooms")
-    .insert([{ name: roomName, is_group: false, created_by: null }])
+    .insert([{ name: roomName, is_group: false, created_by: userAId }])
     .select()
     .single()
 

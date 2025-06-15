@@ -35,7 +35,7 @@ const ChatRoomPage = () => {
 
     useEffect(() => {
         if (messages.length > 0) {
-            setTimeout(() => scrollToBottom(), 500);
+            setTimeout(() => scrollToBottom(), 900);
             // setLastMessageCount(messages.length);
         }
     }, [roomId, scrollToBottom]); // Only trigger when roomId changes
@@ -44,7 +44,7 @@ const ChatRoomPage = () => {
         setLoading(true)
         setTimeout(() => {
             setLoading(false);
-        }, 700)
+        }, 800)
     }, [roomId])
 
 
