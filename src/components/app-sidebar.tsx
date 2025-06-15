@@ -44,9 +44,19 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="text-[24px] font-bold cursor-pointer mt-2" onClick={handleHomeClick}>
+        <div
+          className="relative text-[24px] font-bold cursor-pointer mt-6 inline-block"
+          onClick={handleHomeClick}
+        >
+          <img
+            src="/nakama-chat.png"
+            alt="Nakama Hat"
+            className="absolute -top-4 left-2 w-9 h-9"
+          />
           NakamaChat
         </div>
+
+
       </SidebarHeader>
 
       <SidebarContent>
