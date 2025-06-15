@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,14 +11,17 @@ import { createChatRoom, getOrCreateOneToOneRoom } from "@/supabase-functions/ch
 import { useChatContext } from "@/contexts/chat-context"
 import { useUserContext } from "@/contexts/user-context"
 import { useChatPartnerName } from "@/hooks/useChatPartnerName"
+import { OnePieceLoader } from "@/components/loader"
+import { RefreshCw } from "lucide-react"
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const {currentUser, allUsers} = useUserContext()
+  const { currentUser, allUsers, refetchUsers } = useUserContext()
   const {
     filteredGroupRooms,
     filteredOneToOneRooms,
     newUsersToChatWith,
+    loading,
     refreshChatData,
   } = useChatContext()
 
@@ -38,13 +41,26 @@ export default function HomePage() {
     navigate(`/chat/${roomId}`)
   }
 
+  useEffect(() => {
+    if (loading === true) {
+      refreshChatData()
+      refetchUsers()
+    }
+
+  }, [])
+
+  if (loading) {
+    return <OnePieceLoader />
+  }
+
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full">
         <AppSidebar />
-        <main className="flex-1 p-4 overflow-y-auto">
+        <main className="flex-1 pt-4 md:p-4 overflow-y-auto">
           <div className="flex w-full justify-between px-4 items-center">
-            <h1 className="text-xl font-bold mb-4">Welcome to NakamaChat</h1>
+            <SidebarTrigger/>
+            <h1 className="text-[26px] font-bold"><span className="hidden md:inline">Welcome to</span> NakamaChat</h1>
             <div className="flex gap-2">
               <Avatar avatarUrl={currentUser?.avatar_url} username={currentUser?.username!} />
               <ModeToggle />
@@ -59,11 +75,12 @@ export default function HomePage() {
               onChange={(e) => setRoomName(e.target.value)}
             />
             <Button onClick={handleCreateRoom}>Create Room</Button>
+            <Button onClick={() => refreshChatData()}><RefreshCw/></Button>
           </div>
 
           {/* Group Rooms */}
           <div className="px-4 w-full md:w-[75%]">
-            <h2 className="text-lg font-semibold mb-2">Your Chat Rooms</h2>
+            <h2 className="text-lg font-semibold mb-2">Your Sunny Decks</h2>
             <ul className="space-y-2">
               {filteredGroupRooms.map((room) => (
                 <li
@@ -79,7 +96,7 @@ export default function HomePage() {
 
           {/* One-on-One Chats */}
           <div className="px-4 w-full md:w-[75%] mt-6">
-            <h2 className="text-lg font-semibold mb-2">Your Nakamas 🏴‍☠️</h2>
+            <h2 className="text-lg font-semibold mb-2">Your Den Den Whispers</h2>
             <ul className="space-y-2">
               {filteredOneToOneRooms.map((room) => (
                 <li
@@ -96,7 +113,7 @@ export default function HomePage() {
           {/* New Chats (Users not yet chatted with) */}
           {newUsersToChatWith.length > 0 && (
             <div className="px-4 w-full md:w-[75%] mt-6">
-              <h2 className="text-lg font-semibold mb-2">Find More Nakamas 👒</h2>
+              <h2 className="text-lg font-semibold mb-2">Not Yet Nakamas</h2>
               <ul className="space-y-2">
                 {newUsersToChatWith.map((user) => (
                   <li

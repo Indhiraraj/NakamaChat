@@ -29,10 +29,12 @@ export function MessageList({
             scrollDown()
         }, 100);
     }, [messages])
+
+
     return (
         <div className={cn("flex flex-col gap-6 min-h-[70dvh] md:min-h-2/3 w-full", className)}>
-            <ScrollArea ref={scrollAreaRef} className="h-full overflow-y-auto">
-                <CardContent className="flex flex-col gap-6">
+            <ScrollArea ref={scrollAreaRef} className="h-full overflow-y-auto w-full">
+                <CardContent className="flex flex-col gap-6 w-full px-4 md:px-0">
                     {messages && messages.map((message) => <ChatBubble key={message.id} message={message} />)}
                     <div ref={messageEndRef}></div>
                 </CardContent>

@@ -11,7 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
+  SidebarRail
 } from "@/components/ui/sidebar"
 
 import { useChatContext } from "@/contexts/chat-context"
@@ -44,14 +44,14 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <div className="text-lg font-bold cursor-pointer" onClick={handleHomeClick}>
-          🍖 NakamaChat
+        <div className="text-[24px] font-bold cursor-pointer mt-2" onClick={handleHomeClick}>
+          NakamaChat
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Chat Rooms</SidebarGroupLabel>
+          <SidebarGroupLabel>Sunny Decks</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {groups.map((room) => (
@@ -66,7 +66,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Chats</SidebarGroupLabel>
+          <SidebarGroupLabel>Den Den Whispers</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {chats.map((room) => (
@@ -84,7 +84,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
         {newUsersToChatWith.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Nakamas</SidebarGroupLabel>
+            <SidebarGroupLabel>Not Yet Nakamas</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {newUsersToChatWith.map((user: Profile) => (

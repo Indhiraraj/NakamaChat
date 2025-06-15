@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signInWithEmail } from "@/supabase-functions/auth"
 import React, { useState } from "react"
+import { Link } from "react-router-dom"
 
 export function SignInForm({
   className,
@@ -74,9 +75,9 @@ export function SignInForm({
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="/auth/sign-up" className="underline underline-offset-4">
+              <Link to="/auth/sign-up" className="underline underline-offset-4">
                 Sign up
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>

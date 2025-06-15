@@ -84,7 +84,7 @@ export function RoomHeader({ className, room }: { className?: string, room: Chat
     const title = isChat ? getPartnerName(room) : room?.name || "Group Chat"
 
     return (
-        <div className={cn("flex gap-6 justify-center items-center", className)}>
+        <div className={cn("flex gap-6 px-4 justify-center items-center", className)}>
             <Button onClick={() => navigate("/")}><ArrowLeft></ArrowLeft></Button>
             <h3 className="text-lg font-semibold">{title}</h3>
 

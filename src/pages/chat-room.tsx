@@ -7,11 +7,13 @@ import { useChatContext } from "@/contexts/chat-context"
 import { useRoomMessages } from "@/hooks/useRoomMessages"
 import { useParams } from "react-router-dom"
 import type { ChatRoom } from "@/supabase-functions/chat"
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { MessageLoader } from "@/components/message-loader"
 
 const ChatRoomPage = () => {
     const { id: roomId } = useParams<{ id: string }>()
     const { rooms } = useChatContext()
+    const [loading, setLoading] = useState(true)
 
     // subscribe and fetch messages for this room
     const messages = useRoomMessages(roomId!)
@@ -24,7 +26,7 @@ const ChatRoomPage = () => {
     const scrollTimeoutRef = useRef<NodeJS.Timeout>(setTimeout(() => null, 100))
 
     const scrollToBottom = useCallback(() => {
-        
+
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
         // setUnreadCount(0);
         // setShowScrollButton(false);
@@ -38,18 +40,31 @@ const ChatRoomPage = () => {
         }
     }, [roomId, scrollToBottom]); // Only trigger when roomId changes
 
+    useEffect(() => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false);
+        }, 700)
+    }, [roomId])
+
+
 
     return (
         <SidebarProvider>
             <div className="flex h-[100dvh] w-full">
                 <AppSidebar />
 
-                <div className="flex flex-col flex-1 gap-4 p-6 md:p-2 w-full md:w-[75%] h-[100dvh]">
+                <div className="flex flex-col flex-1 gap-4 py-4 md:p-4 w-full md:w-[75%] h-[100dvh]">
                     {(room && messages) && <>
                         <RoomHeader room={room} />
-                        <MessageList messages={messages} scrollAreaRef={scrollAreaRef} messageEndRef={messageEndRef} scrollTimeoutRef={scrollTimeoutRef} />
+                        {loading ?
+                            <MessageLoader className="flex-1"></MessageLoader>
+                            :
+                            <MessageList messages={messages} scrollAreaRef={scrollAreaRef} messageEndRef={messageEndRef} scrollTimeoutRef={scrollTimeoutRef} />
 
-                        <MessageInput onSent={scrollToBottom}/>
+                        }
+
+                        <MessageInput onSent={scrollToBottom} />
                     </>}
 
                 </div>

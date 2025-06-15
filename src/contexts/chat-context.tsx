@@ -24,6 +24,7 @@ type ChatContextType = {
   filteredOneToOneRooms: ChatRoom[]
   newUsersToChatWith: Profile[]
   chatPartnerIds: string[]
+  loading: boolean
   refreshChatData: () => Promise<void>
 }
 
@@ -34,6 +35,7 @@ const defaultValue: ChatContextType = {
   filteredOneToOneRooms: [],
   newUsersToChatWith: [],
   chatPartnerIds: [],
+  loading: true,
   refreshChatData: async () => {},
 }
 
@@ -45,10 +47,12 @@ export const ChatContextProvider = ({ children }: Props) => {
   const [rooms, setRooms] = useState<ChatRoom[]>([])
   const [chatPartnerIds, setChatPartnerIds] = useState<string[]>([])
   const [allUsers, setAllUsers] = useState<Profile[]>([])
+  const [loading, setLoading] = useState(true)
   // const [currentUser, setCurrentUser] = useState<Profile | null>(null)
 
   // Fetch rooms + users + derive partner IDs
   const refreshChatData = async () => {
+    setLoading(true)
     const me = await getCurrentUser()
     if (!me) return
 
@@ -67,6 +71,7 @@ export const ChatContextProvider = ({ children }: Props) => {
       .filter((id) => id !== me.id)
 
     setChatPartnerIds([...new Set(pIds)])
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -86,6 +91,7 @@ export const ChatContextProvider = ({ children }: Props) => {
         filteredOneToOneRooms,
         newUsersToChatWith,
         chatPartnerIds,
+        loading,
         refreshChatData,
       }}
     >

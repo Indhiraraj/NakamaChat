@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "./lib/supabaseClient"
 import type { Session } from "@supabase/supabase-js"
 import ChatRoomPage from "./pages/chat-room"
+import { OnePieceLoader } from "./components/loader"
 
 function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -14,7 +15,8 @@ function App() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {      
       setSession(session)
-      setLoading(false)
+      setTimeout(() => setLoading(false), 500)
+      // setLoading(false)
     })
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {      
@@ -30,7 +32,7 @@ function App() {
   }, [])
 
   if (loading) {
-    return <div className="p-4">Loading...</div>
+    return <OnePieceLoader/>
   }
 
   return (

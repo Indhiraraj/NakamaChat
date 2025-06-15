@@ -28,7 +28,7 @@ export function Avatar({
       data-slot="avatar"
       className={cn(
         "relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted text-muted-foreground",
-        "w-8 h-8",
+        "w-9 h-9",
         className
       )}
       {...props}
