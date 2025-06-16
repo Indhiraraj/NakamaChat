@@ -32,7 +32,7 @@ export function MessageList({
 
 
     return (
-        <div className={cn("flex flex-1 flex-col gap-6 w-full", className)}>
+        <div className={cn("flex flex-1 flex-col gap-6 w-full max-h-2/3", className)}>
             <ScrollArea ref={scrollAreaRef} className="h-full overflow-y-auto w-full">
                 <CardContent className="flex flex-col gap-6 w-full px-4 md:px-0">
                     {messages && messages.map((message) => <ChatBubble key={message.id} message={message} />)}
