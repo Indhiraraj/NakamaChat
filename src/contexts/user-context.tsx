@@ -27,7 +27,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const user = await getCurrentUser()
     const profiles = await getAllProfiles()
 
+
     const current = profiles?.find((p) => p.id === user?.id) || null
+    
     const others = profiles?.filter((p) => p.id !== user?.id) || []
 
     setCurrentUser(current)

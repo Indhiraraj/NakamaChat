@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import SignUp from "./pages/signup"
 import SignIn from "./pages/signin"
 import Home from "./pages/home"
@@ -7,22 +7,24 @@ import { supabase } from "./lib/supabaseClient"
 import type { Session } from "@supabase/supabase-js"
 import ChatRoomPage from "./pages/chat-room"
 import { OnePieceLoader } from "./components/loader"
+import ResetPasswordPage from "./pages/reset-password"
+import { Toaster } from "sonner"
 
 function App() {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {      
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setTimeout(() => setLoading(false), 500)
       // setLoading(false)
     })
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {      
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-    
+
 
     // 3. Cleanup
     return () => {
@@ -32,7 +34,7 @@ function App() {
   }, [])
 
   if (loading) {
-    return <OnePieceLoader/>
+    return <OnePieceLoader />
   }
 
   return (
@@ -62,7 +64,12 @@ function App() {
             session ? <Navigate to="/" replace /> : <SignIn />
           }
         />
+        <Route
+          path="/auth/reset-password"
+          Component={ResetPasswordPage}
+        />
       </Routes>
+      <Toaster/>
     </BrowserRouter>
   )
 }

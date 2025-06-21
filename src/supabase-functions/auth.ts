@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabaseClient"
+import { toast } from "sonner";
 
 export async function signUpNewUser(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
@@ -48,4 +49,13 @@ export async function resetPassword(email: string) {
 
 export async function updateUserPassword(password: string) {
     await supabase.auth.updateUser({ password: password })
+}
+
+export async function signOutUser() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+        toast(error.message)
+        return false
+    }
+    return true
 }

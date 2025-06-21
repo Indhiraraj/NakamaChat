@@ -12,18 +12,28 @@ import { Label } from "@/components/ui/label"
 import { signInWithEmail } from "@/supabase-functions/auth"
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
+import { ResetPasswordDialog } from "./reset-password-dialog"
+import { toast } from "sonner"
 
 export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-    const [email, setEmail] = useState<string>()
-    const [password, setPassword] = useState<string>()
-  
-    const handleSignIn = async (e: React.FormEvent) => {
-      e.preventDefault()
-      await signInWithEmail(email!, password!)
+  const [email, setEmail] = useState<string>()
+  const [password, setPassword] = useState<string>()
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const user = await signInWithEmail(email!, password!)
+    if (user) {
+      toast("user logged in successfully")
     }
+    else {
+      toast("user login failed")
+    }
+  }
+
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -50,16 +60,18 @@ export function SignInForm({
               <div className="grid gap-3">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
+                  <ResetPasswordDialog
+                    trigger={
+                      <div className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-pointer">
+                        Forgot your password?
+                      </div>
+                    }
+                  />
+
                 </div>
-                <Input 
-                  id="password" 
-                  type="password" 
+                <Input
+                  id="password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required />

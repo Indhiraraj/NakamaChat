@@ -35,6 +35,8 @@ export async function updateProfileName(name: string) {
     .eq('id', (await supabase.auth.getUser()).data.user?.id!)
 
     if (error) {
+        console.log(error.message);
+        
         return null
     } else {
         return data
