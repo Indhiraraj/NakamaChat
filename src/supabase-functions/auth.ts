@@ -1,9 +1,13 @@
 import { supabase } from "@/lib/supabaseClient"
 import { toast } from "sonner";
 
-const environment = import.meta.env.ENVIRONMENT;
+// auth.ts
+const mode = import.meta.env.MODE;   // "development" or "production"
+// console.log(mode);
 
-const redirectTo = environment === "production" ? "https://nakama-chat.vercel.app" : "http://localhost:5173"
+const redirectTo = mode === "production"
+  ? "https://nakama-chat.vercel.app"
+  : "http://localhost:5173";
 
 export async function signUpNewUser(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
@@ -46,6 +50,11 @@ export async function signInWithEmail(email: string, password: string) {
 }
 
 export async function resetPassword(email: string) {
+    // console.log(mode);
+    // console.log(redirectTo);
+    
+    // console.log("test");
+    
     await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${redirectTo}/auth/reset-password`,
     })
