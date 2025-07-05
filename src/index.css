@@ -118,3 +118,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes bgGlowSmooth {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.5);
+  }
+}
+
+.animate-bg-glow {
+  /* 
+    ~0.6s total duration, ease-in-out for gentle ramp,
+    1 iteration, and return to original state at 100%
+  */
+  animation: bgGlowSmooth 1s ease-in-out 1;
+}
+
+
+

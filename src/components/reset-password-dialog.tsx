@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { resetPassword } from "@/supabase-functions/auth"
-import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 export function ResetPasswordDialog({
   trigger,
@@ -21,7 +21,6 @@ export function ResetPasswordDialog({
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const navigate = useNavigate()
 
   const handleReset = async () => {
     if (!email) return setError("Email is required")
@@ -29,7 +28,7 @@ export function ResetPasswordDialog({
     try {
       await resetPassword(email)
       setOpen(false)
-      navigate("/auth/reset-password")
+      toast("Email sent, check your mail Nakama")
     } catch (err) {
       setError("Something went wrong.")
     } finally {

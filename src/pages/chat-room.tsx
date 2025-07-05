@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom"
 import type { ChatRoom } from "@/supabase-functions/chat"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { MessageLoader } from "@/components/message-loader"
+import { MessageContextProvider } from "@/contexts/message-context"
 
 const ChatRoomPage = () => {
     const { id: roomId } = useParams<{ id: string }>()
@@ -17,6 +18,7 @@ const ChatRoomPage = () => {
 
     // subscribe and fetch messages for this room
     const messages = useRoomMessages(roomId!)
+    
 
     // find the current room object
     const room: ChatRoom | undefined = rooms.find((r) => r.id === roomId)
@@ -50,26 +52,28 @@ const ChatRoomPage = () => {
 
 
     return (
-        <SidebarProvider>
-            <div className="flex h-[100dvh] w-full">
-                <AppSidebar />
+        <MessageContextProvider>
+            <SidebarProvider>
+                <div className="flex h-[100dvh] w-full">
+                    <AppSidebar />
 
-                <div className="flex flex-col flex-1 gap-4 py-4 md:p-4 w-full md:w-[75%] h-[100dvh]">
-                    {(room && messages) && <>
-                        <RoomHeader room={room} />
-                        {loading ?
-                            <MessageLoader className="flex-1"></MessageLoader>
-                            :
-                            <MessageList messages={messages} scrollAreaRef={scrollAreaRef} messageEndRef={messageEndRef} scrollTimeoutRef={scrollTimeoutRef} />
+                    <div className="flex flex-col flex-1 gap-4 py-4 md:p-4 w-full md:w-[75%] h-[100dvh]">
+                        {(room && messages) && <>
+                            <RoomHeader room={room} />
+                            {loading ?
+                                <MessageLoader className="flex-1"></MessageLoader>
+                                :
+                                <MessageList messages={messages} scrollAreaRef={scrollAreaRef} messageEndRef={messageEndRef} scrollTimeoutRef={scrollTimeoutRef} />
 
-                        }
+                            }
 
-                        <MessageInput onSent={scrollToBottom} />
-                    </>}
+                            <MessageInput onSent={scrollToBottom} />
+                        </>}
 
+                    </div>
                 </div>
-            </div>
-        </SidebarProvider>
+            </SidebarProvider>
+        </MessageContextProvider>
     )
 }
 
